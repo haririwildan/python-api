@@ -1,0 +1,8 @@
+[phases.setup]
+nixpkgs = ["python312Full", "gcc", "git", "pkg-config"]
+
+[phases.install]
+cmds = ["pip install --upgrade pip", "pip install -r requirements.txt"]
+
+[start]
+cmd = "gunicorn flask_server:app"
