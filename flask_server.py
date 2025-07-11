@@ -4,6 +4,7 @@ from sklearn.metrics import silhouette_score
 import pandas as pd
 import numpy as np
 from pymongo import MongoClient
+import os
 
 app = Flask(__name__)
 
@@ -62,8 +63,9 @@ def cluster_data():
 
         # Simpan ke MongoDB
         try:
-            client = MongoClient("mongodb://localhost:27017/")
-            db = client["salesdb"]
+            mongo_uri = os.environ.get("MONGO_URI")  # Ambil dari Environment Variable
+            client = MongoClient(mongo_uri)
+            db = client["sistem-web-skripsi"]  # ← disesuaikan dengan nama database kamu
             cluster_collection = db["hasil_clusters"]
             meta_collection = db["cluster_metadata"]
 
