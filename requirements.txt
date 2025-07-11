@@ -1,0 +1,7 @@
+Flask==2.3.3
+pandas==2.1.4
+numpy==1.26.2
+scikit-learn==1.3.2
+kmodes==0.12.2
+pymongo==4.6.1
+gunicorn==21.2.0
