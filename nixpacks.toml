@@ -3,20 +3,16 @@ builder = "nixpacks"
 
 [phases.setup]
 nixpkgs = [
-  "python310Full",           # Python 3.10 lebih aman dari 3.12
-  "python310Packages.distutils",
-  "pip",
-  "setuptools",
-  "wheel",
-  "cython",
-  "gcc",
+  "python310",  # Pakai Python 3.10
+  "python310Packages.pip",  # Jangan lupa pip-nya
+  "gcc",  # Buat compile package yang butuh kompilasi
   "pkg-config"
 ]
 
 [phases.install]
 cmds = [
-  "pip install --upgrade pip setuptools wheel",
-  "pip install -r requirements.txt"
+  "python -m pip install --upgrade pip setuptools wheel",  # Pakai python -m pip
+  "python -m pip install -r requirements.txt"
 ]
 
 [start]
