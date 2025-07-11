@@ -3,16 +3,24 @@ builder = "nixpacks"
 
 [phases.setup]
 nixpkgs = [
-  "python310",  # Pakai Python 3.10
-  "python310Packages.pip",  # Jangan lupa pip-nya
-  "gcc",  # Buat compile package yang butuh kompilasi
+  # Pakai python3 (auto pilih versi stabil terbaru)
+  "python3",  
+  "python3Packages.pip",
+  "python3Packages.setuptools",
+  "python3Packages.virtualenv",
+  "gcc",
   "pkg-config"
 ]
 
 [phases.install]
 cmds = [
-  "python -m pip install --upgrade pip setuptools wheel",  # Pakai python -m pip
-  "python -m pip install -r requirements.txt"
+  # Buat virtual environment dulu
+  "python -m venv /opt/venv",
+  # Aktifin venv
+  ". /opt/venv/bin/activate",
+  # Install dependencies
+  "pip install --upgrade pip",
+  "pip install -r requirements.txt"
 ]
 
 [start]
