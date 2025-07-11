@@ -1,8 +1,16 @@
+[build]
+builder = "nixpacks"
+
 [phases.setup]
-nixpkgs = ["python312Full", "gcc", "git", "pkg-config"]
+nixpkgs = ["python312Full", "pip", "gcc", "git", "pkg-config"]
 
 [phases.install]
-cmds = ["pip install --upgrade pip", "pip install -r requirements.txt"]
+cmds = [
+  "python3 -m venv /opt/venv",
+  "source /opt/venv/bin/activate",
+  "pip install --upgrade pip",
+  "pip install -r requirements.txt"
+]
 
 [start]
 cmd = "gunicorn flask_server:app"
