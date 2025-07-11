@@ -14,6 +14,7 @@ def cluster_data():
         input_data = request.get_json()
         if not input_data or 'data' not in input_data:
             return jsonify({"error": "Data tidak ditemukan"}), 400
+
         df = pd.DataFrame(input_data['data'])
 
         if len(df) < 3:
@@ -34,6 +35,7 @@ def cluster_data():
             try:
                 kproto = KPrototypes(n_clusters=k, init='Cao', random_state=42)
                 clusters = kproto.fit_predict(df[categorical + numerical].to_numpy(), categorical=[0,1,2,3,4])
+
                 if len(set(clusters)) < 2 or len(set(clusters)) >= len(df):
                     continue
 
@@ -61,11 +63,10 @@ def cluster_data():
 
         result = df.to_dict(orient='records')
 
-        # Simpan ke MongoDB
         try:
-            mongo_uri = os.environ.get("MONGO_URI")  # Ambil dari Environment Variable
+            mongo_uri = os.getenv("MONGODB_URI", "mongodb://localhost:27017/")
             client = MongoClient(mongo_uri)
-            db = client["sistem-web-skripsi"]  # ← disesuaikan dengan nama database kamu
+            db = client["sistem-web-skripsi"]
             cluster_collection = db["hasil_clusters"]
             meta_collection = db["cluster_metadata"]
 
@@ -93,4 +94,4 @@ def cluster_data():
         return jsonify({"error": f"Terjadi kesalahan: {e}"}), 500
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)
