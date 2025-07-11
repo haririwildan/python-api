@@ -1,22 +1,4 @@
-[build]
-builder = "nixpacks"
-
-[phases.setup]
-nixpkgs = [
-  "python310Full",
-  "pip",
-  "setuptools",
-  "wheel",
-  "cython",
-  "gcc",
-  "pkg-config"
-]
-
-[phases.install]
-cmds = [
-  "pip install --upgrade pip setuptools wheel",
-  "pip install -r requirements.txt"
-]
+# nixpacks.toml
 
 [start]
 cmd = "gunicorn flask_server:app"
