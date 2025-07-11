@@ -3,7 +3,7 @@ builder = "nixpacks"
 
 [phases.setup]
 nixpkgs = [
-  "python312Full",
+  "python310Full",
   "pip",
   "setuptools",
   "wheel",
@@ -14,8 +14,6 @@ nixpkgs = [
 
 [phases.install]
 cmds = [
-  "python3 -m venv /opt/venv",
-  "source /opt/venv/bin/activate",
   "pip install --upgrade pip setuptools wheel",
   "pip install -r requirements.txt"
 ]
